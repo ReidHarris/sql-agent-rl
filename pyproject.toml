@@ -1,0 +1,28 @@
+[project]
+name = "sqlagent"
+version = "0.1.0"
+description = "Multi-turn RL environment and training pipeline for a text-to-SQL agent"
+requires-python = ">=3.10"
+dependencies = [
+    "datasets",
+    "tqdm",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest",
+    "ruff",
+]
+
+[build-system]
+requires = ["setuptools>=61"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.ruff]
+line-length = 100
