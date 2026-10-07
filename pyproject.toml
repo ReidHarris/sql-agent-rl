@@ -6,6 +6,7 @@ requires-python = ">=3.10"
 dependencies = [
     "datasets",
     "tqdm",
+    "sqlglot"
 ]
 
 [project.optional-dependencies]
