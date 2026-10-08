@@ -10,16 +10,45 @@ from sqlagent.prompt import build_system_prompt
 STOP = "</tool_call>"
 TOOL_CALL_RE = re.compile(r"<tool_call>(.*?)(?:</tool_call>|$)", re.DOTALL)
 
+KEY_ALIASES = {
+    "name": "tool",
+    "tool_name": "tool",
+    "tools": "tool",
+    "arguments": "args",
+    "parameters": "args",
+}
+
+JSON_DECODER = json.JSONDecoder(strict=False)  # strict=False allows raw newlines in strings
+
+
+def normalize_action(action: dict) -> dict:
+    return {KEY_ALIASES.get(k, k): v for k, v in action.items()}
+
+
+def _first_action_object(text: str):
+    """Return the first JSON object in text that has a 'tool' key, or None."""
+    start = text.find("{")
+    while start != -1:
+        try:
+            obj, _ = JSON_DECODER.raw_decode(text, start)
+        except json.JSONDecodeError:
+            obj = None
+        if isinstance(obj, dict):
+            obj = normalize_action(obj)
+            if "tool" in obj:
+                return obj
+        start = text.find("{", start + 1)
+    return None
+
+
 def parse_action(text: str):
-    """Return an action dict from the first tool call in text, or None if there isn't one."""
+    """Extract a tool call from model output, or return None if there isn't one.
+
+    Prefers the contents of <tool_call> tags, but falls back to any JSON object in
+    the text, which covers markdown fences and bare JSON.
+    """
     match = TOOL_CALL_RE.search(text)
-    if match is None:
-        return None
-    try:
-        action = json.loads(match.group(1).strip(), strict=False)
-    except json.JSONDecodeError:
-        return None
-    return action if isinstance(action, dict) else None
+    return _first_action_object(match.group(1) if match else text)
 
 @dataclass
 class Trajectory:

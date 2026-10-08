@@ -84,6 +84,7 @@ def test_turn_limit_gives_truncated_zero_reward(example):
     assert traj.reward == 0.0
     assert traj.turns == 3
 
+# --- json tests ---
 
 def test_missing_closing_tag_is_restored_in_history(example):
     outputs = [
@@ -91,3 +92,16 @@ def test_missing_closing_tag_is_restored_in_history(example):
     ]
     traj = run_episode(SQLEnv(), example, scripted(outputs))
     assert traj.messages[-1]["content"].endswith("</tool_call>")
+
+def test_parse_fenced_json_block():
+    text = '```json\n{"tool": "run_sql", "args": {"query": "SELECT 1"}}\n```'
+    assert parse_action(text) == {"tool": "run_sql", "args": {"query": "SELECT 1"}}
+
+
+def test_parse_bare_json_with_surrounding_prose():
+    text = 'Sure! {"tool": "list_tables", "args": {}} Let me know.'
+    assert parse_action(text) == {"tool": "list_tables", "args": {}}
+
+
+def test_parse_json_without_tool_key_is_none():
+    assert parse_action('{"query": "SELECT 1"}') is None

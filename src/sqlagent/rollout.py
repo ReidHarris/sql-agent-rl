@@ -24,7 +24,7 @@ def make_generate(
             messages=messages,
             temperature=temperature,
             max_tokens=max_tokens,
-            stop=["</tool_call>"],
+            stop=["</tool_call>", "\nObservation:"],
         )
         return response.choices[0].message.content or ""
 

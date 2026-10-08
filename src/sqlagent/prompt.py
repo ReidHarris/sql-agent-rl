@@ -4,6 +4,11 @@ def build_system_prompt(max_turns: int) -> str:
         "exploring it with tools and then submitting one final SQL query.\n\n"
         "On each turn, call exactly one tool by writing a JSON object inside <tool_call> tags:\n\n"
         '<tool_call>{"tool": "TOOL_NAME", "args": {...}}</tool_call>\n\n'
+        "For example, to run a query:\n"
+        '<tool_call>{"tool": "run_sql", '
+        '"args": {"query": "SELECT COUNT(*) FROM singer"}}</tool_call>\n\n'
+        "Write only the tool call, with no markdown code fences and no explanation. "
+        "Make exactly one tool call per turn.\n\n"
         "Tools:\n"
         "- list_tables: args {}. Lists the tables in the database.\n"
         '- describe_table: args {"name": "<table>"}. Shows the columns and a few sample '
