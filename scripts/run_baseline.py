@@ -3,6 +3,7 @@
 import argparse
 import json
 import math
+import random
 from collections import Counter
 from pathlib import Path
 
@@ -80,12 +81,15 @@ def parse_args() -> argparse.Namespace:
     p.add_argument("--temperature", type=float, default=0.0)
     p.add_argument("--max-tokens", type=int, default=512, help="Max tokens per turn")
     p.add_argument("--out", default="outputs/baseline.jsonl", help="Where to save trajectories")
+    p.add_argument("--seed", type=int, default=None, help="Shuffle examples before --limit")
     return p.parse_args()
 
 
 def main() -> None:
     args = parse_args()
     examples = load_split(args.split)
+    if args.seed is not None:
+      random.Random(args.seed).shuffle(examples)
     if args.limit:
         examples = examples[: args.limit]
 

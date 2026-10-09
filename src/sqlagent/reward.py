@@ -15,7 +15,7 @@ class ExecResult:
     columns: list | None = None
 
 
-def execute_sql(db_path, sql: str, timeout_s: float = 5.0, max_rows: int = 10_000) -> ExecResult:
+def execute_sql(db_path, sql: str, timeout_s: float = 5.0, max_rows: int = 1_000_000) -> ExecResult:
     """Run one SQL statement on a read-only connection with a time limit."""
     # Open database in read-only mode.
     uri = Path(db_path).resolve().as_uri() + "?mode=ro"

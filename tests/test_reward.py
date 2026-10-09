@@ -121,3 +121,10 @@ def test_empty_matches_empty_known_loophole(db):
     gold = "SELECT name FROM employees WHERE salary > 1000000"
     pred = "SELECT name FROM employees WHERE 1 = 0"
     assert reward(db, pred, gold) == 1.0
+
+def test_large_results_are_compared(db):
+    q = (
+        "WITH RECURSIVE r(x) AS (SELECT 1 UNION ALL SELECT x + 1 FROM r WHERE x < 20000) "
+        "SELECT x FROM r"
+    )
+    assert reward(db, q, q) == 1.0
