@@ -3,7 +3,7 @@ import time
 
 import pytest
 
-from sqlagent.reward import execute_sql, execution_reward
+from sqlagent.reward import execute_sql, execution_reward, has_order_by
 
 
 @pytest.fixture
@@ -28,6 +28,25 @@ def db(tmp_path):
 def reward(db, pred, gold, **kw):
     return execution_reward(pred, gold, db, **kw)
 
+
+# --- has order by tests ---
+
+def test_union_trailing_order_by_counts():
+    assert has_order_by("SELECT a FROM t1 UNION SELECT a FROM t2 ORDER BY a")
+
+
+def test_intersect_trailing_order_by_counts():
+    assert has_order_by("SELECT a FROM t1 INTERSECT SELECT a FROM t2 ORDER BY a")
+
+
+def test_union_without_order_by():
+    assert not has_order_by("SELECT a FROM t1 UNION SELECT a FROM t2")
+
+
+def test_union_order_by_only_in_subquery():
+    assert not has_order_by(
+        "SELECT a FROM (SELECT a FROM t1 ORDER BY a LIMIT 2) UNION SELECT a FROM t2"
+    )
 
 # --- should match ---
 
@@ -76,6 +95,7 @@ def test_wrong_rows(db):
     gold = "SELECT name FROM employees WHERE dept = 'eng'"
     pred = "SELECT name FROM employees WHERE dept = 'ops'"
     assert reward(db, pred, gold) == 0.0
+
 
 
 # --- failures score zero ---

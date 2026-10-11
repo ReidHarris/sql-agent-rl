@@ -8,6 +8,8 @@ from sqlagent.env import SQLEnv
 from sqlagent.prompt import build_system_prompt
 
 STOP = "</tool_call>"
+
+# Match any string between <tool_call> and </tool_call>.
 TOOL_CALL_RE = re.compile(r"<tool_call>(.*?)(?:</tool_call>|$)", re.DOTALL)
 
 KEY_ALIASES = {

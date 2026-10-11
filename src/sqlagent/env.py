@@ -30,19 +30,31 @@ def _format_result(columns, rows) -> str:
 
 class SQLEnv:
     def __init__(self, max_turns: int = 8, timeout_s: float = 5.0):
+
+        # Maximum possible turns to take in one episode.
         self.max_turns = max_turns
+
+        # Maximum amount of time to take in one episode.
         self.timeout_s = timeout_s
+
+        # The current example of the environment.
         self.example: Example | None = None
-        self.turn = 0
+
+        # Keep track of how many steps the episode lasts.
+        self.turn = 0 
+
+        # Boolean to help dictate when an episode ends.
         self.done = True
 
     def reset(self, example: Example) -> str: 
+        '''Zero out all fields and set to provided example.'''
         self.example = example 
         self.turn = 0 
         self.done = False 
         return f"Question: {example.question}"
 
     def step(self, action) -> StepResult:
+        '''A single step in the environment '''
         if self.done:
             raise RuntimeError("Episode is over (or never started); call reset() first.")
         self.turn += 1
