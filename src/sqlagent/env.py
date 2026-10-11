@@ -117,7 +117,11 @@ class SQLEnv:
         lookup = {t.lower(): t for t in self._table_names()}
         real = lookup.get(name.lower())
         if real is None:
-            return self._error(f"No table named {name!r}. Use list_tables to see the tables.")
+            result = self._obs(
+                f"Error: No table named {name!r}. Use list_tables to see the tables."
+            )
+            result.info["unknown_table"] = True
+            return result
         quoted = '"' + real.replace('"', '""') + '"'
         info = execute_sql(self.example.db_path, f"PRAGMA table_info({quoted})", self.timeout_s)
         if not info.ok:
