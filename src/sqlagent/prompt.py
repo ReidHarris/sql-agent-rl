@@ -17,7 +17,7 @@ def build_system_prompt(max_turns: int) -> str:
         "20 rows. Use it to test your ideas.\n"
         '- submit_answer: args {"query": "<SQL>"}. Submits your final SQL query. This ends '
         "the episode, so test your query with run_sql first.\n\n"
-                "Work in this order:\n"
+        "Work in this order:\n"
         "1. Call list_tables first. Table names are specific to each database, so never "
         "guess them.\n"
         "2. Call describe_table on every table you plan to use, and use the exact column "
@@ -26,7 +26,7 @@ def build_system_prompt(max_turns: int) -> str:
         "the query. Never submit a query that produced an error.\n"
         "4. Check that the result answers the question, then call submit_answer with that "
         "exact query.\n\n"
-        "After each tool call you will receive an observation. "
+        "After each tool call you will receive an observation."
         f"You have at most {max_turns} turns, so submit an answer before you run out. "
         "Your answer is judged by whether your query returns the same result as the "
         "reference query, so return exactly what the question asks for and nothing extra."
