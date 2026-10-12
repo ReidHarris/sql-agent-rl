@@ -1,12 +1,8 @@
-(APIServer pid=11628) INFO 10-11 09:23:16 [api_utils.py:347] 
-(APIServer pid=11628) INFO 10-11 09:23:16 [api_utils.py:347]        █     █     █▄   ▄█
-(APIServer pid=11628) INFO 10-11 09:23:16 [api_utils.py:347]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.31.0
-(APIServer pid=11628) INFO 10-11 09:23:16 [api_utils.py:347]   █▄█▀ █     █     █     █  model   Qwen/Qwen2.5-Coder-1.5B-Instruct
-(APIServer pid=11628) INFO 10-11 09:23:16 [api_utils.py:347]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
-(APIServer pid=11628) INFO 10-11 09:23:16 [api_utils.py:347] 
-(APIServer pid=11628) INFO 10-11 09:23:16 [api_utils.py:286] non-default args: {'model_tag': 'Qwen/Qwen2.5-Coder-1.5B-Instruct', 'model': 'Qwen/Qwen2.5-Coder-1.5B-Instruct', 'dtype': 'half', 'max_model_len': 16384}
+(APIServer pid=3745) INFO 10-12 05:00:51 [api_utils.py:347] 
+(APIServer pid=3745) INFO 10-12 05:00:51 [api_utils.py:347]        █     █     █▄   ▄█
+(APIServer pid=3745) INFO 10-12 05:00:51 [api_utils.py:347]  ▄▄ ▄█ █     █     █ ▀▄▀ █  version 0.31.0
+(APIServer pid=3745) INFO 10-12 05:00:51 [api_utils.py:347]   █▄█▀ █     █     █     █  model   Qwen/Qwen2.5-Coder-1.5B-Instruct
+(APIServer pid=3745) INFO 10-12 05:00:51 [api_utils.py:347]    ▀▀  ▀▀▀▀▀ ▀▀▀▀▀ ▀     ▀
+(APIServer pid=3745) INFO 10-12 05:00:51 [api_utils.py:347] 
+(APIServer pid=3745) INFO 10-12 05:00:51 [api_utils.py:286] non-default args: {'model_tag': 'Qwen/Qwen2.5-Coder-1.5B-Instruct', 'model': 'Qwen/Qwen2.5-Coder-1.5B-Instruct', 'dtype': 'half', 'max_model_len': 16384}
 Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
-(APIServer pid=11628) INFO 10-11 09:23:17 [model.py:699] Resolved architecture: Qwen2ForCausalLM
-(APIServer pid=11628) WARNING 10-11 09:23:17 [model.py:2442] Casting torch.bfloat16 to torch.float16.
-(APIServer pid=11628) INFO 10-11 09:23:17 [model.py:2109] Using max model len 16384
-(APIServer pid=11628) INFO 10-11 09:23:17 [kernel.py:408] Final IR op priority after setting platform defaults: IrOpPriorityConfig(rms_norm=['native'], fused_add_rms_norm=['native'], gelu_and_mul_sparse=['triton', 'native'])
